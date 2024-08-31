@@ -20,6 +20,23 @@ In this article, I will only discuss the issues associated with synthetic data a
 
 
 ## Waveforms Gone Wild: 🤖 AI-Powered Velocity Models to Improve Seismic FWI 
+Recently, neural networks and deep learning techniques have become popular in FWI, enhancing its capability to solve complex inverse problems. However, most neural networks used in FWI are trained on synthetic data, because large-scale real world  datasets are not  available  due to issues such as high data acquisition costs, labeling costs, intellectual property concerns, or security concerns. Conducting seismic surveys in the real world is both time-consuming and expensive.  Gathering real seismic data requires fieldwork, sensor deployment, data acquisition, and processing, all of which are resource-intensive.Real-world seismic datasets are often limited in availability due to various constraints.  Access to proprietary datasets from industry or government sources may be restricted, and there may be a lack of sufficient data from certain geographical regions.  Moreover, real seismic data tends to be limited in quantity and may not adequately represent a wide range of geological scenarios. Synthetic data offers a solution to this challenge, providing an endless supply of data that can be tailored to the specific needs of the neural network model. **But there may be a problem in synthetic data,synthetic data can be biased**, and various types of statistical biases can emerge in the generation and usage of synthetic data. These biases often result from assumptions, simplifications, or limitations in the data generation process. The biases can influence the performance of deep learning models, leading to  incorrect results when applied to real-world data. Here are some common types of statistical bias that can occur in synthetic data
+##### 1. Selection Bias
+This occurs when the generated synthetic data does not accurately represent the diversity of real-world data. It happens when certain scenarios, geological structures, or subsurface conditions are overrepresented or underrepresented in the synthetic dataset.  Selection bias can lead to models that perform well on the synthetic data but poorly on real-world data, as they may fail to generalize to unseen or underrepresented conditions.
+
+##### 2. Simulated Data Bias
+Synthetic data is typically generated based on predefined parameters (e.g., velocity, density, geological structures). If these parameters are chosen arbitrarily or without sufficient variation, the synthetic data may not cover the full spectrum of real-world scenarios.  Simulated data bias can cause models to learn patterns that are too specific to the synthetic environment, resulting in poor performance when exposed to more varied real-world data.
+
+#### 3. Confirmation Bias 
+This occurs when the synthetic data is generated in a way that confirms pre-existing hypotheses or assumptions about the subsurface structures. The data generation process may be unintentionally guided by the researchers' expectations, leading to datasets that align with their beliefs rather than objective reality.
+
+#### 4. Sampling Bias 
+Synthetic data is often generated through sampling predefined distributions (e.g., velocity values, wave frequencies). If the sampling process is biased—favoring certain ranges or distributions—the generated data will not represent the true variability in real seismic conditions.
+
+#### 5. Noise Bias 
+The noise added to synthetic data is often simplified or idealized compared to real seismic noise, which can be complex, correlated, and non-stationary. If the synthetic noise does not accurately represent the types of noise present in real data, it introduces a bias.<br><br>
+So well , these are the some common statistical bias that may occure while during generation of synthetic data. [Learn more about bias](https://link.springer.com/article/10.1007/s11831-024-10134-2
+)
 
 
 
