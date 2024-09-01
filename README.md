@@ -67,8 +67,8 @@ $$
 \ dX(t) = \mu (X(t),t)dt + \sigma (X(t),t)dW(t)
 $$
 
-
-
+#### Denoising Diffusion Probabilistic Models
+[Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) are a class of generative models that learn to model the distribution of data by gradually transforming a simple distribution (like Gaussian noise) into a complex data distribution. This transformation is done through a sequence of incremental denoising steps like forward diffusion , reverse diffusion and sampling.
 
 
 
