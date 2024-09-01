@@ -76,9 +76,21 @@ $$
 - The forward process involves adding noise to the data in small increments over a series of time steps. Starting with a data point $x_ 0$ from a real distribution  q(x) where  noise is gradually added to produce increasingly noisy versions $x_1,x_2......x_T$ where T is the total number of steps.
 - By the final step, $x_T$ is pure Gaussian Noise. As T tends to infinite q(x) tend to isotropic gaussian. Now let's see how it mathematically works <br>
 
+Now let's start macking our imput image gaussian by adding gaussian noise . Suppose we have a constant a , here we say image and we do a linear transformation
 
+$$
+\ a + bN(0,1) = N(a,b^2)
+$$
 
+I will use this fundamental principle to macking my image pure gaussian .<br><br>
+So well , our transition function in DDPM model can be defined as 
 
+$$
+\ x_t = \alpha x_{t-1} + \beta N(0,I)
+$$
+
+where $\alpha$ and $\beta$ are noise scheduler which controles how much noise we have to add in my origional image. In first example we try with random value of 
+$\alpha$ = 1.1 and $\beta$ = 0.1 . Heere these two constants are independent to each other. Here independent or uncorrelated constant values results in gradually change in out distribution into normal but we  want smooth change, why w'll see in just a seconds.
 
 
 
