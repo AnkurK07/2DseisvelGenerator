@@ -166,7 +166,7 @@ $$
 ### Reverse Diffusion Process:
 ![image](https://github.com/user-attachments/assets/e186b8aa-5b4e-4d41-954b-88a8ef56cf30)
 
-If we can reverse the above process and sample from $q(x_{t-1}|x_t)$ we will be able to recreate the true sample from a Gaussian noise input, $x_t-- N(0,I)$. Note that if $\alpha_t$ is small enough $q(x_{t-1}|x_t)$ will also be Gaussian. Unfortunately, we cannot easily estimate $q(x_{t-1}|x_t)$ because it needs to use the entire dataset and therefore we need to learn a model $p_{\theta}$ to approximate these conditional probabilities in order to run the reverse diffusion process.So we choose our noise schedule such that the **forward process steps are very small.** Thus, we can approximate the reverse posterior distributions as Gaussians and learn their parameters (i.e., the mean and variance) via neural networks!
+If we can reverse the above process and sample from $q(x_{t-1}|x_t)$ we will be able to recreate the true sample from a Gaussian noise input, $x_t-- N(0,I)$. Note that if $\alpha_t$ is small enough $q(x_{t-1}|x_t)$ will also be Gaussian. Unfortunately, we cannot easily estimate $q(x_{t-1}|x_t)$ because it needs to use the entire dataset and therefore we need to learn a model $p_{\theta}$ to approximate these conditional probabilities in order to run the reverse diffusion process.So we choose our noise schedule such that the **forward process steps are very small (That's why we choosed our constants such that transition should be smooth).** Thus, we can approximate the reverse posterior distributions as Gaussians and learn their parameters (i.e., the mean and variance) via neural networks!
 
 $$
 \ p_{\theta}(x_0:t) = p(x_t) \prod_{t=1}^T p(x_{t-1}|x_t)
