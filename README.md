@@ -48,6 +48,26 @@ Generative models try to capture the distribution of the training data, enabling
 
 ***Now for my task i am going to choose diffusion model, because this model has  shown exceptional performance in generating high-quality, diverse, and detailed images. Diffusion models provide better coverage of the data distribution compared to GANs and tend to produce more realistic outputs, especially in complex domains like natural images or seismic velocity models. [For evidence read this article](https://ar5iv.labs.arxiv.org/html/2105.05233)***
 
+# Diffusion Models : 
+***Diffusion models are inspired by non-equilibrium thermodynamics.*** They define a Markov chain of diffusion steps to slowly add random noise to data and then learn to reverse the ***diffusion process*** to construct desired data samples from the noise. Unlike VAE or flow models, diffusion models are learned with a fixed procedure and the latent variable has high dimensionality (same as the original data).
+#### What is diffusion process ? 
+A diffusion process is a type of stochastic process that models the continuous random movement of particles, prices, or other variables over time that follows the following characteristics
+- **Continuous Path** : The process evolves continuously over time, with no sudden jumps.
+- **Markov Property** : The future state of the process  $X_t$ depends only on its current state $X_{t-1}$ , not on the history of how it got there.
+
+$$
+\ P(X_t| X_{t-1},X_{t-2}.......X_{t-n}) = P(X_t | X_{t-1})
+$$
+
+- **Gaussian Increments**: The changes (increments) in the process over any small time interval are normally distributed with mean proportional to the time interval and variance proportional to both the time interval and a constant known as the diffusion coefficient. 
+
+The diffusion process $X_t$ an often be described by a stochastic differential equation (SDE) of the form: 
+
+$$
+\ dX(t) = \mu (X(t),t)dt + \sigma (X(t),t)dW(t)
+$$
+
+
 
 
 
