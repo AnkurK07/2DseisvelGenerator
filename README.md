@@ -179,7 +179,77 @@ $$
 $$
 
 
+![Demo](Resources/RD.gif)
 
+### Training Objective : 
+The model is trained to minimize the difference between the true reverse distribution $q(x_{t-1}|x_t)$ and and the learned reverse distribution $p_{\theta}(x_{t-1}|x_t)$ i.e minimize the KL Divergence.But Instead of doing this we minimise the squared error between the actual noise added during the forward process and the model predicted noise!. 
+
+$$
+\ L = E_{x_0,\epsilon}[||\epsilon - \epsilon_{\theta}(\sqrt{\bar{\alpha}}x_0) + \sqrt{1-\bar{\alpha}}\epsilon , t)||_2^2]
+$$
+
+### Diffusion in Latent Space and it's Architecture :
+Latent Diffusion Models (LDMs) are an evolution of traditional diffusion models, designed to overcome the significant computational challenges associated with generating high-resolution images directly in pixel space. Traditional diffusion models require processing each pixel individually, which becomes computationally expensive and slow, particularly for large images. LDMs address this issue by operating in a lower-dimensional latent space, which is a compressed representation of the image learned by an autoencoder or a Variational Autoencoder (VAE). By applying the diffusion process in this latent space, LDMs reduce the dimensionality of the data, making the generative process much more efficient while still preserving the essential features of the original images. After the diffusion process in the latent space, the model decodes the compressed representation back into a high-resolution image, ensuring that the final output remains detailed and high-quality. This efficiency makes LDMs particularly well-suited for tasks like high-resolution image generation, text-to-image synthesis, and other applications that require both high image fidelity and scalability. LDMs strike a balance between computational efficiency and image quality, making them a powerful tool in the field of generative modeling.
+
+
+![image](https://github.com/user-attachments/assets/b7d68cb5-5cdf-40ca-acd4-347c43c51cc0)
+
+#### Working of U-Net in DDPM 
+The reverse diffusion process is designed to reverse the forward noising process. Using a learned model, we aim to reconstruct the original image from the final noisy image by progressively removing noise. A U-Net architecture is commonly used for this task. It consists of an encoder-decoder structure with skip connections that allow the model to leverage both high-level and low-level features. At each timestep t of the reverse process, the noisy image $x_t$ and the corresponding timestep 𝑡 are fed into the U-Net model. The U-Net is trained to predict the noise that was added at timestep t which is denoted as $\bar{\epsilon}_t$ . The U-Net outputs a prediction of the noise $\bar{\epsilon}_t$ . This prediction is used to estimate the clean image from the noisy one. The predicted noise is subtracted from the noisy image to get less noisy image.
+
+![image](https://github.com/user-attachments/assets/d5a448f6-c088-47da-a68c-9b7ace225bd3)
+
+​This equation essentially removes the predicted noise, bringing the image closer to the original state.This process is repeated iteratively, moving backwards from the final noisy image $x_T$ towards the clean image $x_0$. At each step, the U-Net refines its prediction, progressively reducing the noise until the image closely resembles the original.
+
+ ![image](https://github.com/user-attachments/assets/05f3bfa1-8ce5-4e06-a7a7-bc3bb8f4e33a)
+
+ ## Why Diffusion Process is Markov chains and Stochastic processes : 
+ The forward process corrupts data, while the reverse process restores it, but they operate under the same mathematical principles of state evolution via Markovian and stochastic transitions.
+
+ ### Markov Chain for Both Processes : 
+ In both the forward and reverse processes, the evolution of states follows a Markov chain, which is defined by the following property:
+
+ $$
+\ P(X_t| X_{t-1},X_{t-2}.......X_{t-n}) = P(X_t | X_{t-1})
+$$
+
+
+This means that the next state $x_t$ (in the forward process) or the previous state $x_{t-1}$ (in the reverse process) depends only on the immediately preceding state and not on any states before that.
+
+##### In Forward Process : 
+$x_t$  is depend only on $x_{t-1}$ where noise is added progressively. The state at each time step depends only on the state from the previous step.
+
+$$
+q(x_t|x_{t-1}) = N(x_t ; \sqrt{\alpha_t}x_{t-1},\sqrt{(1-\alpha_t)}I)
+$$
+
+#### In Reverse Process : 
+$x_{t-1}$ is depend only on $x_t$ where noise is removed progressively. The model estimates the mean and covariance for the denoising step.
+
+$$
+\ p(x_{t-1}|x_t ) = N(x_{t-1}; \mu_{\theta}(x_t,t) , \Sigma_{\theta}(x_t,t))
+$$
+
+###  Stochastic Process for Both Processes :
+Both the forward and reverse diffusion processes are stochastic processes, meaning that randomness is involved at each step. In these processes, each transition involves sampling from a probability distribution, typically a Gaussian distribution.
+
+#### In Forward Process : 
+Random noise 𝜖 is added to the data at each step, making the progression from clean data to noisy data inherently random.
+
+$$
+x_t = \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}𝜖
+$$
+
+ where 𝜖 ~ N(0,I)
+
+ #### In Reverse Process : 
+ At each step, noise is removed by sampling from a learned distribution. The removal process is not deterministic but involves drawing from a Gaussian distribution predicted by the model.
+
+$$
+x_{t-1} -- p(x_{t-1}|x_t ) = N(x_{t-1}; \mu_{\theta}(x_t,t) , \Sigma_{\theta}(x_t,t))
+$$
+ 
+ 
 
 ### Acknowledgments : 
 - [1] ***Deep Learning for Visual Data , University of California, Berkeley.*** <br>
