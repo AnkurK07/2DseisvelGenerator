@@ -251,7 +251,7 @@ $$
  
  ![Demo](Resources/denoise_vp.gif)
 
- So it ia all about my work . If you want to learn more about DDPM and Diffusion Models [Click Here](https://arxiv.org/html/2312.10393v1).
+ So it is all about my work . If you want to learn more about DDPM and Diffusion Models [Click Here](https://arxiv.org/html/2312.10393v1).
 
 ### Acknowledgments : 
 - [1] ***Deep Learning for Visual Data , University of California, Berkeley.*** <br>
