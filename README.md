@@ -67,8 +67,16 @@ $$
 \ dX(t) = \mu (X(t),t)dt + \sigma (X(t),t)dW(t)
 $$
 
-#### Denoising Diffusion Probabilistic Models
+## Denoising Diffusion Probabilistic Models(DDPM)
 [Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) are a class of generative models that learn to model the distribution of data by gradually transforming a simple distribution (like Gaussian noise) into a complex data distribution. This transformation is done through a sequence of incremental denoising steps like forward diffusion , reverse diffusion and sampling.
+
+#### Forward Diffusion Process 
+![image](https://github.com/user-attachments/assets/af284dc9-055e-4892-943d-19e342b22d30)
+
+- The forward process involves adding noise to the data in small increments over a series of time steps. Starting with a data point $x_ 0$ from a real distribution  q(x) where  noise is gradually added to produce increasingly noisy versions $x_1,x_2......x_T$ where T is the total number of steps.
+- By the final step, $x_T$ is pure Gaussian Noise. As T tends to infinite q(x) tend to isotropic gaussian. Now let's see how it mathematically works <br>
+
+
 
 
 
