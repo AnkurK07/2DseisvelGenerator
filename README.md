@@ -67,7 +67,7 @@ $$
 \ dX(t) = \mu (X(t),t)dt + \sigma (X(t),t)dW(t)
 $$
 
-**A diffusion processes follows principles of Markov chains and stochastic processes , how? w'll see at the end of this article , first w'll se how diffusion process works!**
+**A diffusion processes follows principles of Markov chains and stochastic processes , how? w'll see at the end of this article , first w'll see how diffusion process works!**
 
 ## Denoising Diffusion Probabilistic Models(DDPM)
 [Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) are a class of generative models that learn to model the distribution of data by gradually transforming a simple distribution (like Gaussian noise) into a complex data distribution. This transformation is done through a sequence of incremental denoising steps like forward diffusion , reverse diffusion and sampling.
@@ -249,7 +249,9 @@ $$
 x_{t-1} -- p(x_{t-1}|x_t ) = N(x_{t-1}; \mu_{\theta}(x_t,t) , \Sigma_{\theta}(x_t,t))
 $$
  
- 
+ ![Demo](Resources/denoise_vp.gif)
+
+ So it ia all about my work . If you want to learn more about DDPM and Diffusion Models [Click Here](https://arxiv.org/html/2312.10393v1).
 
 ### Acknowledgments : 
 - [1] ***Deep Learning for Visual Data , University of California, Berkeley.*** <br>
@@ -258,7 +260,6 @@ operator networks for full waveform inversion with improved accuracy, generaliza
 robustness.
 - [3] . Liu, J., Shen, Z., He, Y., Zhang, X., Xu, R., Yu, H., Cui, P., 2023. ***Towards Out-Of-Distribution 
 Generalization: A Survey***
-https://arxiv.org/html/2312.10393v1
 
 
 
