@@ -67,6 +67,8 @@ $$
 \ dX(t) = \mu (X(t),t)dt + \sigma (X(t),t)dW(t)
 $$
 
+**A diffusion processes follows principles of Markov chains and stochastic processes , how? w'll see at the end of this article , first w'll se how diffusion process works!**
+
 ## Denoising Diffusion Probabilistic Models(DDPM)
 [Denoising Diffusion Probabilistic Models](https://arxiv.org/pdf/2006.11239) are a class of generative models that learn to model the distribution of data by gradually transforming a simple distribution (like Gaussian noise) into a complex data distribution. This transformation is done through a sequence of incremental denoising steps like forward diffusion , reverse diffusion and sampling.
 
@@ -90,12 +92,91 @@ $$
 $$
 
 where $\alpha$ and $\beta$ are noise scheduler which controles how much noise we have to add in my origional image. In first example we try with random value of 
-$\alpha$ = 1.1 and $\beta$ = 0.1 . Heere these two constants are independent to each other. Here independent or uncorrelated constant values results in gradually change in out distribution into normal but we  want smooth change, why w'll see in just a seconds.
+$\alpha$ = 1.1 and $\beta$ = 0.1 . Heere these two constants are independent to each other. Here independent or uncorrelated constant values results in gradually transition in each step and changes  our distribution into normal very fast but we  want smooth transition in each step  and slow convergence into normal   , why w'll see in just a seconds.
+
+![Demo](Resources/D2-ezgif.com-video-to-gif-converter.gif)
+
+Researchers found that setting $\alpha$ = $\sqrt{\alpha}$ and $\beta$ = $\sqrt{1-\alpha}$ satisfies the above condition as shown in simulation . So now our trasition function becomes $x_t = \sqrt{\alpha} x_{t-1} + \sqrt{1-\alpha} N(0,I)$ <br>
+
+![Demo](Resources/D1-ezgif.com-video-to-gif-converter.gif)
+
+Mathematically, the forward process is defined as: 
+
+$$
+q(x_t|x_{t-1}) = N(x_t ; \sqrt{\alpha_t}x_{t-1},\sqrt{(1-\alpha_t)}I)
+$$
+
+We can write this in terms of $x_t$:
+
+$$
+x_t = \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}N(0,I)
+$$
+
+We can write this in terms of the original data $x_0$:
+
+$$
+x_t = \sqrt{\alpha_t}(\sqrt{1-\alpha_t}x_{t-2} + \sqrt{1-\alpha_t}N(0,I)) + \sqrt{1-\alpha_t}N(0,I)
+$$
+
+Finally, we can write:
+
+$$
+x_t = \sqrt{\bar{\alpha_t}}x_{0} + \sqrt{1-\bar{\alpha_t}}N(0,I)
+$$
+
+<br>
+
+ So 
+ 
+
+ $$
+ q(x_t|x_0) =   N(x_t ; \sqrt{\bar{\alpha}_t} x_0, \sqrt{(1-\bar{\alpha}_t)}I)
+ $$
 
 
 
+where $\bar{\alpha_t} = \prod_{t=1}^T \alpha_i$ , <br>
+- $\alpha_t$ : is a variance schedule that controls how much noise is added at each step.
+- N : denotes a Gaussian distribution.<br><br>
+
+**Can we go into reverse direction ?** <br>
+![image](https://github.com/user-attachments/assets/b446a036-f157-4055-a9b1-810933869c5e)
 
 
+- The goal of a diffusion model is to learn the reverse denoising process to iteratively undo the forward process.
+- In this way, the reverse process appears as if it is generating new data from random noise!
+
+**But finding the exact distribution is hard , why ?**
+
+since we are given that $q(x_t|x_{t-1})$ from forward process , how do we compute $q(x_{t-1}|x_t)$ ? from bayes theorem we know that 
+
+$$
+q(x_{t-1}|x_t) = \frac{q(x_t|x_{t-1})q(x_{t-1})}{q(x_t)}
+$$
+
+$$
+q(x_t) = \int q(x_t|x_{t-1})q(x_{t-1})dx
+$$
+
+**This is computationally intractable**<br>
+- Need to integrate over the whole data distribution to find $q(x_t)$ and $q(x_{t-1})$
+- Where else have we seen this dilemma ?
+- We still need the posterior distribution to carry out the reverse process. Can we approximate it somehow --Yes!
+
+### Reverse Diffusion Process:
+![image](https://github.com/user-attachments/assets/e186b8aa-5b4e-4d41-954b-88a8ef56cf30)
+
+If we can reverse the above process and sample from $q(x_{t-1}|x_t)$ we will be able to recreate the true sample from a Gaussian noise input, $x_t-- N(0,I)$. Note that if $\alpha_t$ is small enough $q(x_{t-1}|x_t)$ will also be Gaussian. Unfortunately, we cannot easily estimate $q(x_{t-1}|x_t)$ because it needs to use the entire dataset and therefore we need to learn a model $p_{\theta}$ to approximate these conditional probabilities in order to run the reverse diffusion process.So we choose our noise schedule such that the **forward process steps are very small.** Thus, we can approximate the reverse posterior distributions as Gaussians and learn their parameters (i.e., the mean and variance) via neural networks!
+
+$$
+\ p_{\theta}(x_0:t) = p(x_t) \prod_{t=1}^T p(x_{t-1}|x_t)
+$$
+
+where 
+
+$$
+\ p(x_{t-1}|x_t ) = N(x_{t-1},\mu_{\theta}(x_t,t) , \Sigma_{\theta}(x_t,t))
+$$
 
 
 
@@ -107,6 +188,7 @@ operator networks for full waveform inversion with improved accuracy, generaliza
 robustness.
 - [3] . Liu, J., Shen, Z., He, Y., Zhang, X., Xu, R., Yu, H., Cui, P., 2023. ***Towards Out-Of-Distribution 
 Generalization: A Survey***
+https://arxiv.org/html/2312.10393v1
 
 
 
