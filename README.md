@@ -216,7 +216,9 @@ Latent Diffusion Models (LDMs) are an evolution of traditional diffusion models,
 #### Working of U-Net in DDPM 
 The reverse diffusion process is designed to reverse the forward noising process. Using a learned model, we aim to reconstruct the original image from the final noisy image by progressively removing noise. A U-Net architecture is commonly used for this task. It consists of an encoder-decoder structure with skip connections that allow the model to leverage both high-level and low-level features. At each timestep t of the reverse process, the noisy image $x_t$ and the corresponding timestep 𝑡 are fed into the U-Net model. The U-Net is trained to predict the noise that was added at timestep t which is denoted as $\bar{\epsilon}_t$ . The U-Net outputs a prediction of the noise $\bar{\epsilon}_t$ . This prediction is used to estimate the clean image from the noisy one. The predicted noise is subtracted from the noisy image to get less noisy image.
 
-![image](https://github.com/user-attachments/assets/d5a448f6-c088-47da-a68c-9b7ace225bd3)
+$$
+x_{t-1} = \frac{1}{\sqrt{\alpha_t}}(x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha_t}}}\epsilon_{\theta}(x_t,t)) + \sigma_t z_t
+$$
 
 ​This equation essentially removes the predicted noise, bringing the image closer to the original state.This process is repeated iteratively, moving backwards from the final noisy image $x_T$ towards the clean image $x_0$. At each step, the U-Net refines its prediction, progressively reducing the noise until the image closely resembles the original.
 
