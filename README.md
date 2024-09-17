@@ -42,6 +42,7 @@ So well , these are the some common statistical bias that may occure while durin
 ). **Now the question arises "can we remove these inherent bias from dataset?", and the answer is No!**. But we can improve it to some extent, how?
 
 ### 💡 Idea : 
+**This idea is an experimental approach, and its effectiveness remains uncertain at this stage.**<br>
 By diversifying  the dataset we can reduce bias from it to some extent. What i did , i took the 5000 random samples of each class (total 10 classes are present) from [Open FWI dataset](https://openfwi-lanl.github.io/docs/data.html)  and shuffled it randomly. After that i applied strong data augmentation like Flipping (Horizontal/Vertical), Rotation, Scaling, Cropping and Elastic Distortion to make my dataset more random and diverse. But still we have limited ammount of dataset and Hybrid Models like ***CNN-Transformer Fused Model*** needs large ammount of dataset to train.  <br><br>
 Now what i want, to train a deep learning model that took the finite number of samples what i have and learns their distribution. After that we can generate infinite number of samples from that learned distribution. ***Generative models*** does this task very well. Before moving forward you must have clear idea about what are [Generative and Discriminative Models](https://www.baeldung.com/cs/ml-generative-vs-discriminative) and how [Deep Generative Models](https://youtu.be/Dmm4UG-6jxA?si=EiP7DCs6mjSb_3Pj) works.
 
