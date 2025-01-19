@@ -56,7 +56,7 @@ config= TrainingConfig()
 train_dataloader = torch.utils.data.DataLoader(dataset4, batch_size=config.train_batch_size, shuffle=True)
 # Defining the model 
 unetconfig = UNetConfig()
-model = UNetModel(unetconfig)
+model = UNetModel(config=unetconfig)
 # Defining the loss function
 loss = F.mse_loss(noise_pred, noise)
 # Defining the Optimizer
